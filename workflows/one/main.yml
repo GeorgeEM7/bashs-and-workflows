@@ -1,0 +1,16 @@
+name: CI/CD
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: deploy to Server
+        run: |
+          docker stop main_db_1 main_web_1
+          cd /home/prod/main
+          docker-compose up -d

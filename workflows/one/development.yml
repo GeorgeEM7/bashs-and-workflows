@@ -1,0 +1,16 @@
+name: CI/CD dev
+on:
+  push:
+    branches: [ test ]
+  pull_request:
+    branches: [ "test" ]
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: restart docker
+        run: |
+          docker stop db.name.eg.mas web.name.eg.mas
+          cd /home/devops/project/mas
+          docker-compose up -d
